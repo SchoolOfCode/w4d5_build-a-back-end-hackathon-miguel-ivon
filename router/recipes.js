@@ -10,8 +10,30 @@ import recipes from "../libs/recipes.js";
 const router = express.Router();
 
 router.get("/", function (req, res) {
-    const responseArray = { success : true, message: `Here is your recipe`, payload: recipes };
-    res.json(responseArray)
+    const responseObject = { success : true, message: `Here is your recipe`, payload: recipes };
+    res.json(responseObject)
 })
+
+router.get("/:id", function (req,res) {
+    const recipeId = req.params.id;
+    let searchedRecipes = [];
+    for (let i = 0; i < recipes.length; i++) {
+        if (Number(recipeId) === recipes[i].id) {
+            searchedRecipes.push(recipes[i]);
+        }
+    }
+    const responseObject = { success: true, message: `Here is your recipe with id ${recipeId}`, payload: searchedRecipes};
+    res.json(responseObject);
+});
+
+router.post("/", function(req,res) {
+    const body = req.body;
+    recipes.push(body);
+
+    const responseObject = { success: true, message: `Here is your new recipe`, payload: recipes}
+    res.json(responseObject)
+})
+
+
 
 export default router;
