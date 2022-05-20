@@ -2,7 +2,7 @@
 -create a variable to store express router function
  - Create router handler
  - export the recipesRouter
- 
+
 */
 
 import express from "express";
@@ -30,10 +30,23 @@ router.post("/", function(req,res) {
     const body = req.body;
     recipes.push(body);
 
-    const responseObject = { success: true, message: `Here is your new recipe`, payload: recipes}
+    const responseObject = { success: true, message: `Here is your new recipe`, payload: recipes };
     res.json(responseObject)
 })
 
+router.put("/:id", function(req,res) {
+    const recipeId = req.params.id;
+    const body = req.body;
+    
+
+    for (let i = 0; i < recipes.length; i++) {
+        if (Number(recipeId) === recipes[i].id) {
+            recipes[i] = body;
+        }
+    }
+    const responseObject = { success: true, message: `Here is your updated recipe`, payload: body };
+    res.json(responseObject);
+})
 
 
 export default router;
