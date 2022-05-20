@@ -48,5 +48,17 @@ router.put("/:id", function(req,res) {
     res.json(responseObject);
 })
 
+router.delete("/:id", function(req,res) {
+    const recipeId = req.params.id;
+    
+
+    for (let i = 0; i < recipes.length; i++) {
+        if (Number(recipeId) === recipes[i].id) {
+            recipes.splice((recipeId -1), 1 )
+        }
+    }
+    const responseObject = { success: true, message: `Recipe has been deleted.`, payload: recipes };
+    res.json(responseObject);
+})
 
 export default router;
